@@ -61,7 +61,7 @@ inquirer
                     throw err;
                 };
 
-                console.log("New README file created with success!");
+                console.log("New README file created!");
             });
         });
 
