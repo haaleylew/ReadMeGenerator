@@ -1,85 +1,77 @@
-// array of questions for user
-const questions = [
-    {
-        type: "input",
-        name: "title",
-        message: "What is your project title?"
-    },
-    {
-        type: "input",
-        name: "description",
-        message: "What is your project's description"
-    },
-    {
-        type: "input",
-        name: "installation",
-        message: "Please provide the installation instructions"
-    },
-    {
-        type: "input",
-        name: "usage",
-        message: "Please provide the project usage"
-    },
-    {
-        type: "input",
-        name: "contributing",
-        message: "Please provide the contributing authors"
-    },
-    {
-        type: "input",
-        name: "test",
-        message: "Please provide the project tests"
-    },
-    {
-        type: "input",
-        name: "username",
-        message: "What is your github user name?"
-    },
-    {
-        type: "input",
-        name: "repo",
-        message: "What is your repo link?"
-    },
-];
+const fs = require("fs");
+const util = require("util");
+const inquirer = require("inquirer");
+const generateReadme = require("./generateMarkdown")
+const writeFileAsync = util.promisify(fs.writeFile);
 
-inquirer
-    .prompt(questions)
-    .then(function (data) {
-        const queryUrl = `https://api.github.com/users/${data.username}`;
 
-        axios.get(queryUrl).then(function (res) {
-
-            const githubInfo = {
-                githubImage: res.data.avatar_url,
-                email: res.data.email,
-                profile: res.data.html_url,
-                name: res.data.name
-            };
-
-            fs.writeFile("README.md", generate(data, githubInfo), function (err) {
-                if (err) {
-                    throw err;
-                };
-
-                console.log("New README file created!");
-            });
-        });
-
-    });
-
-function init() {
-
+function promptUser() {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "projectTitle",
+            message: "what is the project name?",
+        },
+        {
+            type: "input",
+            name: "description",
+            message: "describe your project: "
+        },
+        {
+            type: "input",
+            name: "installation",
+            message: "Any installations?: ",
+        },
+        {
+            type: "input",
+            name: "usage",
+            message: "What is this project usage for?"
+        },
+        {
+            type: "input",
+            name: "license",
+            message: "What license was used for this project? ",
+        },
+        {
+            type: "input",
+            name: "contributing",
+            message: "Were there any other contributors?"
+        },
+        {
+            type: "input",
+            name: "tests",
+            message: "what tests were included?"
+        },
+        {
+            type: "input",
+            name: "questions",
+            message: "What do I do if I have an issue? "
+        },
+        {
+            type: "input",
+            name: "username",
+            message: " enter your GitHub username: "
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "what is your email: "
+        }
+    ]);
 }
 
-init();
-// function to write README file
-// function writeToFile(fileName, data) {
-// }
+// Async function using util.promisify 
+async function init() {
+    try {
+        // Ask user questions and generate responses
+        const answers = await promptUser();
+        const generateContent = generateReadme(answers);
+        // Write new README.md to dist directory
+        await writeFileAsync('.README.md', generateContent);
+        console.log('Successfully made README.md');
+    } catch (err) {
+        console.log(err);
+    }
+}
 
-// // function to initialize program
-// function init() {
-
-// }
-
-// // function call to initialize program
-// init();
+init();  

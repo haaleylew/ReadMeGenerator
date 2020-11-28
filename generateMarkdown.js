@@ -1,36 +1,34 @@
-function generateMarkdown(data, githubInfo) {
+function generateReadme(answers) {
   return `
-# **${data.title}**
-${data.badge}
-## Description 
-${data.description}
-## Table of contents
-- [Description](#Description)
-- [Installation](#Installation)
-- [Usage](#Usage)
-- [Licence](#Licence)
-- [Contributors](#Contributors)
-- [Test](#Test)
-- [Repository Link](#Repository)
-- [GitHub Info](#GitHub) 
+${answers.projectTitle}
+
+ ${answers.description}
+
 ## Installation
-        ${data.installation}
+ ${answers.installation}
+
 ## Usage
-${data.usage}
-## Licence
-${data.licence}
-## Contributors
-${data.contributing}
-## Test
-${data.test}
-## Repository
-- [Project Repo](${data.repo})
-## GitHub
-![Image of me](${githubInfo.githubImage})
-- ${githubInfo.name}
-- [GitHub Profile](${githubInfo.profile})
-- <${githubInfo.email}>
+ ${answers.usage}
+
+## License
+
+ ${answers.license} 
+
+## Contributing
+ ${answers.contributing}
+
+## Tests
+ ${answers.tests}
+
+## Questions
+ ${answers.questions}
+
+Find me on GitHub: [${answers.username}](https://github.com/${answers.username}
+
+
+ Email me with any questions: ${answers.email}
+
 `;
 }
 
-module.exports = generateMarkdown;
+module.exports = generateReadme;
