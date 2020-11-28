@@ -1,8 +1,18 @@
-function generateReadme(answers) {
+function generateMarkdown(answers) {
   return `
 ${answers.projectTitle}
 
  ${answers.description}
+
+## Table of Contents
+- [Description](#description)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+- [Contributing](#contributing)
+- [Tests](#tests)
+- [Questions](#questions)
+
 
 ## Installation
  ${answers.installation}
@@ -31,4 +41,4 @@ Find me on GitHub: [${answers.username}](https://github.com/${answers.username}
 `;
 }
 
-module.exports = generateReadme;
+module.exports = generateMarkdown;

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const util = require("util");
 const inquirer = require("inquirer");
-const generateReadme = require("./generateMarkdown")
+const generateMarkdown = require("./generateMarkdown")
 const writeFileAsync = util.promisify(fs.writeFile);
 
 
@@ -63,7 +63,7 @@ function promptUser() {
 async function init() {
     try {
         const answers = await promptUser();
-        const generateContent = generateReadme(answers);
+        const generateContent = generateMarkdown(answers);
         await writeFileAsync('.README.md', generateContent);
         console.log('Successfully made README.md');
     } catch (err) {
